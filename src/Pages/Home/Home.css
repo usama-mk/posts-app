@@ -1,0 +1,32 @@
+.home{
+    width: 100%;
+    height: 100%;
+    margin-top: 1vh;
+    display: flex;
+    flex-direction: column;
+     align-items: center;
+     justify-content: center;
+    
+}
+.title{
+    text-align: center;
+}
+select {
+    /* border: 1px solid #fff; */
+    background-color: transparent;
+    color: white;
+    font-weight: bolder;
+
+}
+select option {
+    background-color: #606874; 
+}
+.container{
+    width: 80vw;
+    height: 70vh;
+    justify-content: center;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
