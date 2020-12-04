@@ -80,7 +80,7 @@ export default function Home(props) {
 
    //Getting Posters
     useEffect(()=>{
-        
+         
         const unsubscribe = db.collection('posters').onSnapshot((snapshot)=>
                {
                    if(!snapshot){
@@ -140,12 +140,14 @@ export default function Home(props) {
             <div className="container">
                {
                    posters.map((poster)=>{
-  
+                                        
                                         return <Poster  
+                                        key={poster.id}
                                         imageUrl= {poster.data.imageUrl}
                                         title={poster.data.title}
                                         description={poster.data.description}
                                         userEmail={poster.data.userEmail}
+                                        id= {poster.id}
                                         />   
                    })
                }

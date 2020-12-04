@@ -16,13 +16,17 @@ function Poster(props) {
     const title = props.title;
     const description = props.description;
     const userEmail= props.userEmail;
+    const id= props.id;
 
    const renderRedirect = () => {
       if (true) {
         props.history.push({
           pathname: '/viewimage',
           state: { imageUrl: imageUrl,
-                   title: title
+                   title: title,
+                   description: description,
+                   userEmail: userEmail,
+                   id: id
           }
         })
       }
@@ -35,22 +39,12 @@ function Poster(props) {
             <span style={{width:"100%",alignItems:"start", color:"white", fontWeight:"bold", wordWrap:"break-word" }}>{title}</span> <br/>
                 <img  src={imageUrl?imageUrl:posterImg}  width="113" height="168" />
             </div>
-            {isOpen && (
-              // <Lightbox
-              //   mainSrc={imageUrl?imageUrl:posterImg}
-                
-              //   imageTitle={title}
-              //   imageCaption={<h3 style={{ width:"100%", wordSpacing:"30px", textAlign:"center",}}>{
-              //     `  description=${description}
-                    
-              //     `}
-              //     </h3>}
-              //   onCloseRequest={() =>{ setIsOpen(false);}}
-              //   />
+            {/* {isOpen && (
+              
               <ViewImage imageUrl={imageUrl?imageUrl:posterImg} />
                 
                 )
-                }
+                } */}
             
         </div>
     )

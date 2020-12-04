@@ -73,6 +73,7 @@ export default function CreatePost(props) {
                      imageUrl: URL,
                      title: data.title,                  
                      description: data.description,
+                     
                  })
              }).then(()=>{
                  ref.update({

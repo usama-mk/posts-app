@@ -7,6 +7,7 @@ import ApprovePost from './Pages/ApprovePost/ApprovePost';
 import CreatePost from './Pages/CreatePost/CreatePost';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
+import ReportImage from './Pages/ReportImage/ReportImage';
 import ViewImage from './Pages/ViewImage/ViewImage';
 
 function App() {
@@ -56,6 +57,7 @@ useEffect(()=>{
        {user ? <Route exact path={`/createpost`} render={()=>(<CreatePost user={user} isAdmin={isAdmin} />)} />: <div></div> }
        {user?<Route exact path="/approvepost" render={()=>(<ApprovePost user={user}  />)} />: <div></div>}
        {user?<Route exact path="/viewimage" render={()=>(<ViewImage user={user}  />)} />: <div></div>}
+       {user?<Route exact path="/reportimage" render={()=>(<ReportImage user={user}  />)} />: <div></div>}
       </BrowserRouter>
     </div>
   );
