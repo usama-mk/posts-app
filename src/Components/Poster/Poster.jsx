@@ -34,17 +34,12 @@ function Poster(props) {
      
     return (
         <div>
-            <div onClick={() =>{ renderRedirect() }} style={{backgroundColor:"rgba(0, 0, 0, 0.3)", width:"auto", height:"auto", padding:"5px", margin:"5px", marginTop:"4vh", display:"flex", flexDirection:"column", alignItems:"center"}} className="posterContainer">
+            <div onClick={() =>{ renderRedirect() }} style={{backgroundColor:"rgba(0, 0, 0, 0.3)", width:"auto", height:"auto", padding:"5px", margin:"10px", marginTop:"4vh", display:"flex", flexDirection:"column", alignItems:"center"}} className="posterContainer">
                  
             <span style={{width:"100%",alignItems:"start", color:"white", fontWeight:"bold", wordWrap:"break-word" }}>{title}</span> <br/>
-                <img  src={imageUrl?imageUrl:posterImg}  width="113" height="168" />
+                <img  src={imageUrl?imageUrl:posterImg}  width="200" height="200" />
             </div>
-            {/* {isOpen && (
-              
-              <ViewImage imageUrl={imageUrl?imageUrl:posterImg} />
-                
-                )
-                } */}
+             
             
         </div>
     )

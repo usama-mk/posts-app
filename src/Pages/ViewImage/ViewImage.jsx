@@ -70,10 +70,10 @@ function ViewImage(props) {
         <div className="viewImage">
             <img src={imageUrl} alt="Image" width="250" height="250"/> <br/>
             <Button onClick={() =>{ renderRedirect() }} style={{backgroundColor:"red", color:"white"}}>Report</Button>
-            <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold", marginLeft:"5px"}} onClick={handleHomeRoute}>Home</Button>
-            <h1>{title}</h1>
+            <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold", marginLeft:"5px"}} onClick={handleHomeRoute}>Home</Button> <br/>
+            <h1 className="titleIn">{title}</h1> <br/>
            <Input type="text" id="submitComment" onChange={(e)=>setComment(e.target.value)} value={comment}/>
-           <Button onClick={submitComment} >Comment</Button>
+           <Button style={{backgroundColor:"#03396c", color:"white"}} onClick={submitComment} >Comment</Button>
            {
                comments.map((comment)=>{
                    return <Comment key={comment.id} comment={comment.data} />

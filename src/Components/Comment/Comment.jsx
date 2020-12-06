@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import './Comment.scss'
+
 
 export default function Comment(props) {
     const {comment} = props;
@@ -8,9 +10,9 @@ export default function Comment(props) {
     return (
         <div className="comment">
              
-    <span>{comment.email}</span>
-    <h3>{comment.commentMessage}</h3>
-     
+    <span style={{color:"white", fontSize:"bolder", backgroundColor:"grey"}} className="commentEmail">{comment.email}</span>
+    <h3 style={{color:"black", fontSize:"bolder", }}className="commentMessage">{comment.commentMessage}</h3>
+     <hr/>
              
         </div>
     )
