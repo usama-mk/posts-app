@@ -69,7 +69,7 @@ function Poster(props) {
             <MoreHoriz className="dots" onClick={() =>{ reportRedirect() }}/>
             </div>
             <div onClick={() =>{ renderRedirect() }}>
-                <img  src={imageUrl?imageUrl:posterImg}  width="366" height="366" />
+                <img  src={imageUrl?imageUrl:posterImg}  width="270" height="270" />
             </div>
             <div style={{width:"100%", display:"flex", justifyContent:"flex-end" }}>
            

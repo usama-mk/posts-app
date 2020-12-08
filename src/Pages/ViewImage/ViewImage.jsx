@@ -62,8 +62,8 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
      if(comment){
         db.collection('posters').doc(id).collection("comments").add({
             commentMessage: comment,
-            email: userEmail,
-            uid:uid,
+            email: user.email,
+            uid:user.uid,
             timeStamp: firebase.firestore.FieldValue.serverTimestamp()  
     
         });
@@ -78,7 +78,7 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
     return (
        <Card>
         <div className="viewImage">
-           <Card style={{width:matches?"400px":"1000px", margin:"0 auto", boxShadow: "0px 5px 5px 5px #aaaaaa"}}>
+           <Card style={{width:matches?"400px":"1000px", margin:"0 auto", }}>
             <img src={imageUrl} alt="Image" width={matches?"300px":"auto"} height="400px"/> 
            </Card>
            <br/>
@@ -86,7 +86,7 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
             <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold", marginLeft:"5px", boxShadow: "0px 2px 2px 0px #aaaaaa"}} onClick={handleHomeRoute}>Home</Button> <br/>
             {/* <h1 className="titleIn">{title}</h1> <br/> */}
              <h4 className="">{description}</h4> <br/> <hr/>  
-              <h1 className="titleIn">COMMENTS Section</h1> <br/>
+              <h1 className="titleIn">Comentarios</h1> <br/>
            { user &&
                <div>
                <Input type="text" id="submitComment" onChange={(e)=>setComment(e.target.value)} value={comment}/>
