@@ -8,8 +8,8 @@
     
 }
 body{
-  background: #2D3743 url(../src/Assets/img/bg-main.png) repeat 0 0;
-  background-color:#2D3743 ;
+  /* background: #2D3743 url(../src/Assets/img/bg-main.png) repeat 0 0; */
+  /* background-color:#2D3743 ; */
   background-size: cover;
   background-attachment: fixed;
   border-top: 1px solid #DDD;

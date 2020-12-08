@@ -10,7 +10,6 @@ export default function ReportImage(props) {
     const user = props.user.email;
     const location = useLocation();
     const imageUrl= location.state.imageUrl;
-    const title = location.state.title;
     const description = location.state.description;
     const userEmail = location.state.userEmail;
     const id = location.state.id;
@@ -21,7 +20,6 @@ export default function ReportImage(props) {
                 reporterEmail: user,
                 // timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 reportedImageId: id,
-                reportedImageTitle: title,
                 reportedImageUrl: imageUrl
         
             });

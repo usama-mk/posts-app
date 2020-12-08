@@ -1,5 +1,5 @@
 import { Button, IconButton, Input, LinearProgress, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {useForm} from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { db, firebaseApp, storage } from '../../firebase';
@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 // import '../Components/toast.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './CreatePost.scss'
+import AddCircle from '@material-ui/icons/AddCircle';
+import firebase from 'firebase';
 
 
 
@@ -47,8 +49,12 @@ export default function CreatePost(props) {
     const {register,handleSubmit, errors, reset} = useForm();
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState("");
+    var filez="";
      
-    
+     useEffect(() => {
+    uploadFileHandler()
+}, [file]);
+     
     const handleHomeRoute=()=>{
         window.location.assign("/");
     }
@@ -63,6 +69,7 @@ export default function CreatePost(props) {
         const refID = db.collection("posters").doc().id;
         const ref = db.collection('posters').doc(refID);  
         var URL;
+       
         if(file && progress==100){
             storage.ref("images").child(file.name).getDownloadURL().then(url => {
                 URL=url;      
@@ -71,7 +78,7 @@ export default function CreatePost(props) {
                  ref.set({
                      userEmail: data.userEmail,
                      imageUrl: URL,
-                     title: data.title,                  
+                     timeStamp: firebase.firestore.FieldValue.serverTimestamp()  ,         
                      description: data.description,
                      
                  })
@@ -91,13 +98,15 @@ export default function CreatePost(props) {
                 draggable: true,
                 progress: undefined,
                 });
-                document.getElementById("input").value = "";
-                setFile("");
+                document.getElementById("file-input").value = "";
+                // setFile("");
+                filez="";
                 setProgress(0)
                 reset();
                 
         }
       else{
+           console.log(`${file}`)
         toast.warning("please upload an image or let it finish uploading");
       }
        
@@ -107,19 +116,18 @@ export default function CreatePost(props) {
     const selectFileHandler = (event) => {
          
         if (event.target.files[0]) {
-            setFile(event.target.files[0]);
+            setFile(event.target.files[0])
+            filez=event.target.files[0];
+            uploadFileHandler();
         }
+         
     
     }
    
     const uploadFileHandler = () => {
-        if(file && (progress==100)){
-            toast.error("File already uploaded", {
-                position:"bottom-center"
-            })
-            return
-        }
+        
         if (file) {
+            console.log(`name: ${file.name}`)
             const uploadTask = storage.ref(`images/${file.name}`).put(file);
             uploadTask.on(
                 "state_changed",
@@ -144,24 +152,24 @@ export default function CreatePost(props) {
             <h1 style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}}>Create Poster</h1>
             <h3 style={{backgroundColor:"black",color:"white", fontWeight:"bold", padding:"5px"}}>Upload Poster Picture</h3>
               <div>
-              <input type="file" className="input" id="input"  onChange={selectFileHandler}/> <br/>
+              <div class="image-upload">
+  <label for="file-input">
+  < AddCircle   style={{width:"50px", height:"50px", color:"#f06d06" }}/>
+  </label>
+
+  <input id="file-input" type="file" onChange={selectFileHandler} />
+</div>
+              {/* <input type="file" className="input" id="input"  onChange={selectFileHandler}/> <br/> */}
                <LinearProgress color="primary" variant="determinate" value={progress} />
-               <Button style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}} className="btn"  onClick={uploadFileHandler} >Upload</Button>
+               {/* <Button style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}} className="btn"  onClick={uploadFileHandler} >Upload</Button> */}
               </div>
            <form autoComplete="off" className="go-right" onSubmit={handleSubmit(onSubmit)} >
-        
-  {/*  */}
-  <div>
-           <input style={{marginTop:"10px"}} placeholder="Title"  type="text"  name="title"  ref={register({required: true, maxLength: 25})}/>
-           {errors.name && <p style={{color:"red"}}>You can enter max 25 characters</p> }
-    <label >Title</label>
-  </div>
    
   
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Description" name="description" type="text" ref={register({required: true, maxLength: 200})}/>
-    {errors.name && <p style={{color:"red"}}>You can enter max 200 characters</p> }
+    <input style={{marginTop:"10px"}} placeholder="Description" name="description" type="text" ref={register({required: true, })}/>
+    {/* {errors.name && <p style={{color:"red"}}>You can enter max 200 characters</p> } */} 
     <label>Description</label>
   </div>
    

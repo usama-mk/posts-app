@@ -81,7 +81,7 @@ export default function Home(props) {
    //Getting Posters
     useEffect(()=>{
          
-        const unsubscribe = db.collection('posters').onSnapshot((snapshot)=>
+        const unsubscribe = db.collection('posters').orderBy("timeStamp" , "desc").onSnapshot((snapshot)=>
                {
                    if(!snapshot){
                        return;
@@ -106,7 +106,7 @@ export default function Home(props) {
             <div className="title">
                <div style={{marginTop:"5vh"}}>
                    {
-                       user && <span style={{color:"white", marginTop:"5vh", paddingTop:"20px"}} >
+                       user && <span style={{color:"black", marginTop:"5vh", paddingTop:"20px"}} >
                            Logged in as: {user.email} <br/>
                        </span> 
                    }
@@ -123,14 +123,14 @@ export default function Home(props) {
                  {
                     user && <Button onClick={handleCreatePostRoute}>
                     <div>
-                    <h4 style={{color:"yellow", backgroundColor:"black", padding:"5px"}}>Create Post</h4>
+                    <h4 style={{color:"yellow", backgroundColor:"black", padding:"5px", boxShadow: "0px 3px 3px 0px #aaaaaa"}}>Create Post</h4>
                     </div>
                 </Button>
                 }
                  
                </div>
               {/* <img src={logo} height="100px" width="300px" alt="logo"/> <br/> */}
-              <h1 style={{display: "inline-block", color:"white", borderBottom: "1px solid black", }}>
+              <h1 style={{display: "inline-block", color:"black" ,boxShadow: "0px 5px 5px 5px #aaaaaa" }}>
              Posts App
               </h1>
              
@@ -148,6 +148,7 @@ export default function Home(props) {
                                         description={poster.data.description}
                                         userEmail={poster.data.userEmail}
                                         id= {poster.id}
+                                        uid={ user.uid}
                                         />   
                    })
                }
