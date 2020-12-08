@@ -148,7 +148,7 @@ export default function Home(props) {
                                         description={poster.data.description}
                                         userEmail={poster.data.userEmail}
                                         id= {poster.id}
-                                        uid={ user.uid}
+                                        uid={ poster.data.uid}
                                         />   
                    })
                }

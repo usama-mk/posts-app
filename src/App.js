@@ -1,4 +1,4 @@
-import { Switch } from '@material-ui/core';
+import {  Switch } from "react-router";
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
@@ -52,12 +52,13 @@ useEffect(()=>{
     <div className="App">
       <BrowserRouter>
        
+       
        <Route exact path="/"  render={()=>(<Home user={user} isAdmin={isAdmin} />)} />
        <Route exact path="/login" component={Login} />
        {user ? <Route exact path={`/createpost`} render={()=>(<CreatePost user={user} isAdmin={isAdmin} />)} />: <div></div> }
-       {user?<Route exact path="/approvepost" render={()=>(<ApprovePost user={user}  />)} />: <div></div>}
-       {user?<Route exact path="/viewimage" render={()=>(<ViewImage user={user}  />)} />: <div></div>}
-       {user?<Route exact path="/reportimage" render={()=>(<ReportImage user={user}  />)} />: <div></div>}
+       {<Route exact path="/viewimage" render={()=>(<ViewImage user={user}  />)} /> }
+       {<Route exact path="/reportimage" render={()=>(<ReportImage user={user}  />)} /> }
+      
       </BrowserRouter>
     </div>
   );

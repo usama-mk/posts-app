@@ -4,10 +4,12 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { db } from '../../firebase';
 import './ReportImage.scss'
+import Login from '../Login/Login';
+
 
 export default function ReportImage(props) {
     const [reportMessage, setReportMessage] = useState("");
-    const user = props.user.email;
+    const user = props.user;
     const location = useLocation();
     const imageUrl= location.state.imageUrl;
     const description = location.state.description;
@@ -41,11 +43,19 @@ export default function ReportImage(props) {
     }
 
     return (
-        <div className="reportImage">
+    
+        <div> 
+        {
+           user?  <div className="reportImage">
             <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold", marginBottom:"30px"}} onClick={handleHomeRoute}>Home</Button>
             <textarea rows="4" cols="50" onChange={(e)=>setReportMessage(e.target.value)} value={reportMessage}>
             </textarea> <br/>
             <Button onClick={submitReport} style={{backgroundColor:"green" , color:"white"}}>Submit Report</Button>
+        </div> :
+        <Login/>
+        }
+        
         </div>
+     
     )
 }

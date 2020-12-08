@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function CreatePost(props) {
+    const user = props.user;
     const classes= useStyles();
     const isAdmin= props.isAdmin
     const {register,handleSubmit, errors, reset} = useForm();
@@ -80,6 +81,7 @@ export default function CreatePost(props) {
                      imageUrl: URL,
                      timeStamp: firebase.firestore.FieldValue.serverTimestamp()  ,         
                      description: data.description,
+                     uid: user.uid
                      
                  })
              }).then(()=>{

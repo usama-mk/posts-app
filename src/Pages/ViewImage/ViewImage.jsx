@@ -8,6 +8,7 @@ import './ViewImage.scss';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 function ViewImage(props) {
+    const user= props.user;
     const [comment, setComment]= useState("")
     const [comments, setComments]= useState([])
     const location = useLocation();
@@ -22,7 +23,7 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
     useEffect(() => {
        
  
-         
+         console.log(userEmail)
         const unsubscribe = db.collection('posters').doc(id).collection("comments").orderBy("timeStamp" , "asc").onSnapshot((snapshot)=>
                {
                    if(!snapshot){
@@ -86,7 +87,7 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
             {/* <h1 className="titleIn">{title}</h1> <br/> */}
              <h4 className="">{description}</h4> <br/> <hr/>  
               <h1 className="titleIn">COMMENTS Section</h1> <br/>
-           { userEmail &&
+           { user &&
                <div>
                <Input type="text" id="submitComment" onChange={(e)=>setComment(e.target.value)} value={comment}/>
            <Button style={{backgroundColor:"#03396c", color:"white", marginLeft:"5px", boxShadow: "0px 2px 2px 0px #aaaaaa"}} onClick={submitComment} >Add Comment</Button>
