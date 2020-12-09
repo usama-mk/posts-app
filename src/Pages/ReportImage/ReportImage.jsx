@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { db } from '../../firebase';
 import './ReportImage.scss'
 import Login from '../Login/Login';
+import firebase from 'firebase'
 
 
 export default function ReportImage(props) {
@@ -19,8 +20,8 @@ export default function ReportImage(props) {
         if(reportMessage){
             db.collection('reports').add({
                 reportMessage: reportMessage,
-                reporterEmail: user,
-                // timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                reporterEmail: user.email,
+                timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
                 reportedImageId: id,
                 reportedImageUrl: imageUrl
         

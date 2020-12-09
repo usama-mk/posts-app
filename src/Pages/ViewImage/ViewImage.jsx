@@ -76,11 +76,11 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
 }
 
     return (
-       <Card>
+       <Card >
         <div className="viewImage">
-           <Card style={{width:matches?"400px":"1000px", margin:"0 auto", }}>
+           <div style={{width:matches?"400px":"1000px", margin:"0 auto", }}>
             <img src={imageUrl} alt="Image" width={matches?"300px":"auto"} height="400px"/> 
-           </Card>
+           </div>
            <br/>
             <Button onClick={() =>{ renderRedirect() }} style={{backgroundColor:"red", color:"white", boxShadow: "0px 2px 2px 0px #aaaaaa"}}>Report</Button>
             <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold", marginLeft:"5px", boxShadow: "0px 2px 2px 0px #aaaaaa"}} onClick={handleHomeRoute}>Home</Button> <br/>
