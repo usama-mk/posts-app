@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import { db, firebaseApp } from './firebase';
-import ApprovePost from './Pages/ApprovePost/ApprovePost';
 import CreatePost from './Pages/CreatePost/CreatePost';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';

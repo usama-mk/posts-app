@@ -1,6 +1,6 @@
 import { Button, Input, Card } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import { useLocation, withRouter } from 'react-router-dom';
+import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import Comment from '../../Components/Comment/Comment';
 import { db } from '../../firebase';
 import firebase from 'firebase';
@@ -20,6 +20,7 @@ function ViewImage(props) {
       const uid = location.state.uid;
      const matches = useMediaQuery('(max-width:860px)');
 var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
+const history= useHistory()
     useEffect(() => {
        
  
@@ -72,7 +73,7 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
   }
 
   const handleHomeRoute=()=>{
-    window.location.assign("/");
+    history.push("/");
 }
 
     return (
@@ -86,7 +87,7 @@ var name   = userEmail.substring(0, userEmail.lastIndexOf("@"));
             <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold", marginLeft:"5px", boxShadow: "0px 2px 2px 0px #aaaaaa"}} onClick={handleHomeRoute}>Home</Button> <br/>
             {/* <h1 className="titleIn">{title}</h1> <br/> */}
              <h4 className="">{description}</h4> <br/> <hr/>  
-              <h1 className="titleIn">Comentarios</h1> <br/>
+              <h1 className="titleIn">Comments</h1> <br/>
            { user &&
                <div>
                <Input type="text" id="submitComment" onChange={(e)=>setComment(e.target.value)} value={comment}/>

@@ -9,6 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import './CreatePost.scss'
 import AddCircle from '@material-ui/icons/AddCircle';
 import firebase from 'firebase';
+import ReactQuill from 'react-quill';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import 'react-quill/dist/quill.snow.css'; 
+import { formats, modules } from '../../Components/Poster/Poster';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -49,6 +54,8 @@ export default function CreatePost(props) {
     const isAdmin= props.isAdmin
     const {register,handleSubmit, errors, reset} = useForm();
     const [progress, setProgress] = useState(0);
+    const [description, setDescription] = useState("");
+    const history=useHistory()
     const [file, setFile] = useState("");
     var filez="";
      
@@ -57,7 +64,7 @@ export default function CreatePost(props) {
 }, [file]);
      
     const handleHomeRoute=()=>{
-        window.location.assign("/");
+        history.push("/");
     }
     const onSubmit = data => {
         data.userEmail= props.user.email;
@@ -80,7 +87,7 @@ export default function CreatePost(props) {
                      userEmail: data.userEmail,
                      imageUrl: URL,
                      timeStamp: firebase.firestore.FieldValue.serverTimestamp()  ,         
-                     description: data.description,
+                     description: description,
                      uid: user.uid
                      
                  })
@@ -165,21 +172,45 @@ export default function CreatePost(props) {
                <LinearProgress color="primary" variant="determinate" value={progress} />
                {/* <Button style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}} className="btn"  onClick={uploadFileHandler} >Upload</Button> */}
               </div>
+
+              {/* editor */}
+
+              <div>
+      {/* <HighlightOffIcon
+          style={{color: 'red'}}
+          onClick={() => {
+            handleSubmit()
+          }}
+        /> */}
+    <ReactQuill theme="snow"
+    value={description}
+   //  onKeyDown={_handleKeyDown}
+    modules={modules}
+    formats={formats}
+     onChange={(e)=>setDescription(e)} 
+     style={{marginTop:"10px"}} placeholder="Description" name="description" 
+     />
+    </div>
            <form autoComplete="off" className="go-right" onSubmit={handleSubmit(onSubmit)} >
    
   
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Description" name="description" type="text" ref={register({required: true, })}/>
+    {/* <input style={{marginTop:"10px"}} placeholder="Description" name="description" type="text" ref={register({required: true, })}/> */}
+   
     {/* {errors.name && <p style={{color:"red"}}>You can enter max 200 characters</p> } */} 
     <label>Description</label>
   </div>
    
            {/* {errors.password && <p>{errors.password.message}</p>} */}
-           <IconButton>
+           <div style={ {width:'100%', display:'flex', justifyContent:'center'}}>
+           <IconButton >
            <input style={{backgroundColor:"#f06d06"}} className={classes.submit} type="submit" value="Add Poster" />
 
-           </IconButton>           </form>
+           </IconButton> 
+           </div>
+                     </form>
+          
         </div>
     )
 }

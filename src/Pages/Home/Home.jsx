@@ -4,28 +4,17 @@ import Poster from '../../Components/Poster/Poster';
 import { db, firebaseApp } from '../../firebase';
 import logo from '../../Assets/img/esLogo.png';
 import './Home.css'
+import { useHistory } from 'react-router-dom';
 
 export default function Home(props) {
     const {user}= props;
     const[posters, setPosters]= useState([]);
-    const[dropDownDetails, setDropDownDetails]= useState([]);
-   const[selectedGenre, setSelectedGenre]=useState("");
-   const [selectedCity, setSelectedCity] = useState("");
-    const [selectedLocation, setSelectedLocation] = useState("");
-    const [selectedMonthAndYear, setSelectedMonthAndYear ] = useState("");
-    const [isAdmin, setIsAdmin]=useState("")
-    const[selectedCountry, setSelectedCountry]=useState("")
-    const [selectedName, setSelectedName]=useState("")
-    var  genres=[];
-    var cities=[];
-    var locations=[];
-    var countries=[];
-    var monthAndYears=[];
-    var names=[];
+    const history= useHistory()
+  
   
 
     const handleLoginRoute=(url)=>{
-        window.location.href=url ;
+       history.push(url) ;
     }
     const handleLogout= ()=>{
         firebaseApp.auth().signOut();
@@ -33,48 +22,9 @@ export default function Home(props) {
     }
    
     const handleCreatePostRoute=()=>{
-       window.location.assign("/createpost")
+       history.push("/createpost")
     }
-    const handleApprovePostRoute=()=>{
-        window.location.assign("/approvepost")
-    }
-   const selectGenre=()=>{
-    const GENRE= document.getElementById("genre").value
-    setSelectedGenre(GENRE);
-    console.log(GENRE)
-     
-   }
-   const selectCity=()=>{
-    const CITY= document.getElementById("city").value
-    setSelectedCity(CITY);
-    console.log(CITY)
-     
-   }
-   const selectMonth=()=>{
-    const MONTH= document.getElementById("month").value
-    setSelectedMonthAndYear(MONTH);
-    console.log(MONTH)
-     
-   }
-   const selectLocation=()=>{
-    const LOCATION= document.getElementById("location").value
-    setSelectedLocation(LOCATION);
-    console.log(LOCATION)
-     
-   }
-   const selectName=()=>{
-    const NAME= document.getElementById("name").value
-    setSelectedName(NAME);
-    console.log(NAME)
-     
-   }
-   const selectCountry=()=>{
-    const COUNTRY= document.getElementById("country").value
-    setSelectedCountry(COUNTRY);
-    console.log(COUNTRY)
-     
-   }
-
+    
     
    
 
