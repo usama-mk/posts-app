@@ -8,19 +8,24 @@ import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import ReportImage from './Pages/ReportImage/ReportImage';
 import ViewImage from './Pages/ViewImage/ViewImage';
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./actions";
+import UserProfile from "./Pages/UserProfile/UserProfile";
 
 function App() {
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
+  const user= useSelector(state=> state.user.user)
+  const dispatch= useDispatch()
   const [isAdmin, setIsAdmin]=useState("")
 
   const authListener = ()=>{
     firebaseApp.auth().onAuthStateChanged((user)=>{
         if(user){
             
-            setUser(user);
+            dispatch(setUser(user));
         }
         else{
-            setUser("");
+           dispatch( setUser(""));
         }
     })
 }
@@ -32,7 +37,7 @@ useEffect(()=>{
   var docRef = db.collection("Admins").doc("cKbxaFUTg1KcAkgCXExa");
   docRef.get().then(function(doc) {
       if (doc.exists) {
-          console.log("Document data:", doc.data());
+          console.log("Admins' Document data:", doc.data());
          const adminsArray= doc.data().adminsArray;
          adminsArray.map((admin)=>{
             if(user.email==admin){
@@ -41,7 +46,7 @@ useEffect(()=>{
          })
       } else {
           // doc.data() will be undefined in this case
-          console.log("No such document!");
+          console.log("Admins: No such document!");
       }
   }).catch(function(error) {
       console.log("Error getting document:", error);
@@ -57,6 +62,7 @@ useEffect(()=>{
        {user ? <Route exact path={`/createpost`} render={()=>(<CreatePost user={user} isAdmin={isAdmin} />)} />: <div></div> }
        {<Route exact path="/viewimage" render={()=>(<ViewImage user={user}  />)} /> }
        {<Route exact path="/reportimage" render={()=>(<ReportImage user={user}  />)} /> }
+       {<Route exact path="/userprofile" render={()=>(<UserProfile user={user}  />)} /> }
       
       </BrowserRouter>
     </div>

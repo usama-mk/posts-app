@@ -14,6 +14,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import 'react-quill/dist/quill.snow.css'; 
 import { formats, modules } from '../../Components/Poster/Poster';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function CreatePost(props) {
+    const additionalData= useSelector(state=> state.user.additionalData)
     const user = props.user;
     const classes= useStyles();
     const isAdmin= props.isAdmin
@@ -62,8 +64,8 @@ export default function CreatePost(props) {
      useEffect(() => {
     uploadFileHandler()
 }, [file]);
-     
-    const handleHomeRoute=()=>{
+    
+ const handleHomeRoute=()=>{
         history.push("/");
     }
     const onSubmit = data => {
@@ -154,9 +156,11 @@ export default function CreatePost(props) {
             )
         }
     }
-
+    
     return (
+        
         <div  className={classes.paper}>
+            {console.log(additionalData)}
             <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold"}} onClick={handleHomeRoute}>Home</Button>
             <h1 style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}}>Create Poster</h1>
             <h3 style={{backgroundColor:"black",color:"white", fontWeight:"bold", padding:"5px"}}>Upload Poster Picture</h3>

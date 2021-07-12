@@ -1,15 +1,21 @@
-import { Button } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Poster from '../../Components/Poster/Poster';
 import { db, firebaseApp } from '../../firebase';
 import logo from '../../Assets/img/esLogo.png';
 import './Home.css'
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAdditionalData } from '../../actions';
 
 export default function Home(props) {
-    const {user}= props;
+    // const {user}= props;
+    const user= useSelector(state=> state.user.user)
     const[posters, setPosters]= useState([]);
+    const dispatch= useDispatch()
     const history= useHistory()
+    const additionalData= useSelector(state=> state.user.additionalData)
+
   
   
 
@@ -26,7 +32,9 @@ export default function Home(props) {
     }
     
     
-   
+   const openProfile=()=>{
+       history.push("/userprofile")
+   }
 
    //Getting Posters
     useEffect(()=>{
@@ -44,6 +52,12 @@ export default function Home(props) {
                   ))
                } );
             //    console.log(posters[0].data.name);
+            db.collection("users").doc(`${user.uid}`)
+            .onSnapshot((doc) => {
+            // console.log("Current data: ", doc.data());
+            dispatch(setAdditionalData(doc.data()))
+            console.log(additionalData)
+                 });
            
                return () => {      //when comp cleansup/unmount(cleansup is better), (always) detach this real time listener after it's done using it(best def)
                    unsubscribe();  //this is for optimization
@@ -53,6 +67,7 @@ export default function Home(props) {
  
     return (
         <div className="home">
+            {user && <Avatar onClick={openProfile} />}
             <div className="title">
                <div style={{marginTop:"5vh"}}>
                    {
