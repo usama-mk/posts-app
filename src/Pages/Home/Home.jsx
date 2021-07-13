@@ -15,6 +15,8 @@ export default function Home(props) {
     const dispatch= useDispatch()
     const history= useHistory()
     const additionalData= useSelector(state => state.user.additionalData)
+    const[isLoading, setIsloading]= useState(true);
+
 
   
   
@@ -49,24 +51,34 @@ export default function Home(props) {
                       id: doc.id,        //the unique 'auto' ids
                       data: doc.data(),  //the data inside the doc(coll>doc>data)
                   })
-                  ))
+                  )
+                  )
                } );
+
+          
+                    console.log(`postersss ${posters}`)
+                    setIsloading(false)
+                  
+               
             //    console.log(posters[0].data.name);
             db.collection("users").doc(`${user.uid}`)
             .onSnapshot((doc) => {
             // console.log("Current data: ", doc.data());
             dispatch(setAdditionalData(doc.data()))
-            console.log(additionalData)
-                 });
+            console.log(`additional data home: ${additionalData.name}`)
+            
+            })
            
                return () => {      //when comp cleansup/unmount(cleansup is better), (always) detach this real time listener after it's done using it(best def)
                    unsubscribe();  //this is for optimization
                }
              
           }, []); 
+
+ 
  
     return (
-        <div className="home">
+        <div style={{display:'flex'}} className="home">
             {user && <Avatar onClick={openProfile} />}
             <div className="title">
                <div style={{marginTop:"5vh"}}>
@@ -104,19 +116,21 @@ export default function Home(props) {
            
             <div className="container">
                {
+                   isLoading?<h1>Fetching data..</h1>:
                    posters.map((poster)=>{
                                         
-                                        return <Poster  
-                                        key={poster.id}
-                                        imageUrl= {poster.data.imageUrl}
-                                        title={poster.data.title}
-                                        description={poster.data.description}
-                                        userEmail={poster.data.userEmail}
-                                        id= {poster.id}
-                                        uid={ poster.data.uid}
-                                        name={poster.data.name}
-                                        />   
-                   })
+                    return <Poster  
+                    key={poster.id}
+                    imageUrl= {poster.data.imageUrl?poster.data.imageUrl:''}
+                    title={poster.data.title?poster.data.title:''}
+                    description={poster.data.description?poster.data.description:''}
+                    userEmail={poster.data.userEmail?poster.data.userEmail:''}
+                    id= {poster.id}
+                    uid={ poster.data.uid?poster.data.uid:''}
+                    name={poster.data.name?poster.data.name:'name'}
+                    isLoading={isLoading}
+                    />   
+})
                }
             </div>
             
