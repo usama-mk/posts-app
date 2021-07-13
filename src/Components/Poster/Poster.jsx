@@ -16,7 +16,8 @@ import { db, firebaseApp } from "../../firebase";
 import firebase from 'firebase';
 import ReactQuill from 'react-quill'; 
 import 'react-quill/dist/quill.snow.css'; 
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
+import { useSelector } from "react-redux";
 
 
 function Poster(props) {
@@ -24,6 +25,8 @@ function Poster(props) {
   const [editOpen, setEditOpen] = useState(false);
   const [desc, setDesc] = useState("");
   const [description, setDescription] = useState(props.description);
+  const user= useSelector(state => state.user.user)
+  const additionalData= useSelector(state => state.user.additionalData)
 
 
 
@@ -33,6 +36,8 @@ function Poster(props) {
   const userEmail = props.userEmail;
   const id = props.id;
   const uid = props.uid;
+  const name = props.name;
+
 
   const renderRedirect = () => {
     if (true) {
@@ -45,6 +50,7 @@ function Poster(props) {
           userEmail: userEmail,
           id: id,
           uid: uid,
+          name: name
         },
       });
     }
@@ -64,6 +70,14 @@ function Poster(props) {
       // });
     
   };
+
+const deleteDoc=()=>{
+  db.collection("posters").doc(id).delete().then(() => {
+    console.log("Document successfully deleted!");
+}).catch((error) => {
+    console.error("Error removing document: ", error);
+});
+}
 const updateEdit=(desc)=>{
   const ref = db.collection('posters').doc(id);  
     ref.set({
@@ -71,7 +85,8 @@ const updateEdit=(desc)=>{
       imageUrl: imageUrl,
       timeStamp: firebase.firestore.FieldValue.serverTimestamp()  ,         
       description: desc,
-      uid: uid
+      uid: uid,
+      name: name
       
   })
   setEditOpen(false)
@@ -100,14 +115,14 @@ const PostOptions=()=>{
           }}
         />
       <p onClick={editPost} >edit</p>
-      <p>delete</p>
+      <p onClick={deleteDoc} >delete</p>
     </div>
   )
 }
 
   return (
     editOpen? 
-    <div>
+    <div  >
       <HighlightOffIcon
           style={{color: 'red'}}
           onClick={() => {
@@ -122,12 +137,13 @@ const PostOptions=()=>{
      onChange={(e)=>setDescription(e)} />
     </div>
     :
-    <div className="poster">
+    <div className="poster box">
       <div
         style={{
           backgroundColor: "white",
           border: "1px solid lightGrey",
           width: "auto",
+          minWidth:'400px',
           height: "auto",
           maxHeight: "670px",
           padding: "5px",
@@ -141,7 +157,7 @@ const PostOptions=()=>{
         className="posterContainer"
       >
         {/* <span style={{width:"100%",alignItems:"start", color:"white", fontWeight:"bold", wordWrap:"break-word" }}>{title}</span> <br/> */}
-        <div
+        <div className="box"
           style={{
             width: "100%",
             display: "flex",
@@ -151,21 +167,21 @@ const PostOptions=()=>{
         >
           {/* <i class="fad fa-user-circle"></i> */}
           <div style={{ display: "flex", alignItems: "center" }}>
-            <AccountCircle />
-            <h5 style={{ color: "black" }}>{uid}</h5>
+            <AccountCircle  />
+            <h5 style={{ color: "black" }}>{user.uid==uid?additionalData.name:name?name:uid}</h5>
           </div>
           {/* <Button variant="outlined" size="small" onClick={() =>{ reportRedirect() }} style={{ color:"black", height:"15px"}}>Report</Button> */}
           
           {
-            isOpen? <PostOptions/> :<MoreHoriz
+            isOpen? <PostOptions/> : (user.uid==uid)?<MoreHoriz
             className="dots"
             onClick={() => {
               reportRedirect();
             }}
-          />
+          />:""
           }
         </div>
-        <div
+        <div className="box"
           onClick={() => {
             renderRedirect();
           }}
@@ -176,7 +192,7 @@ const PostOptions=()=>{
           style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
         >
           <div
-            className="comment"
+            className="comment box"
             style={{ display: "flex", alignItems: "center" }}
             onClick={() => {
               renderRedirect();
@@ -186,7 +202,7 @@ const PostOptions=()=>{
             <ChatBubbleOutline />
           </div>
         </div>
-        <div
+        <div  className="box"
           style={{
             maxWidth: "366px",
             width: "100%",
@@ -194,7 +210,7 @@ const PostOptions=()=>{
             flexWrap: "wrap",
           }}
         >
-          <h4
+          <div
             style={{
               width: "100%",
               overflow: "hidden",
@@ -203,6 +219,7 @@ const PostOptions=()=>{
               maxHeight: "103px",
               margin: "0px",
               justifyContent: "flex-start",
+              marginBottom: "10px"
             }}
           >
             {editOpen?
@@ -211,7 +228,7 @@ const PostOptions=()=>{
          ''
             
             :ReactHtmlParser(description)}
-          </h4>
+          </div>
         </div>
       </div>
     </div>

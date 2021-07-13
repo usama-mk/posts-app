@@ -3,6 +3,9 @@
 }
 .poster:hover{
     opacity:1;
+    transform: scale(1.1);
+    z-index: 3;
+    transition: 1.4s;
 }
 
 .comment:hover{
@@ -11,4 +14,18 @@
 .dots:hover{
     cursor: pointer;
 }
- 
+
+.box>:hover{
+     
+     transition: 0.8s;
+     position: relative;
+     z-index: 2;
+     box-shadow: 2px 2px 8px 8px  	#080808;
+    
+}
+// .box {
+//     width: 500px;
+//     height: 500px; 
+// }
+
+

@@ -14,7 +14,7 @@ export default function Home(props) {
     const[posters, setPosters]= useState([]);
     const dispatch= useDispatch()
     const history= useHistory()
-    const additionalData= useSelector(state=> state.user.additionalData)
+    const additionalData= useSelector(state => state.user.additionalData)
 
   
   
@@ -114,6 +114,7 @@ export default function Home(props) {
                                         userEmail={poster.data.userEmail}
                                         id= {poster.id}
                                         uid={ poster.data.uid}
+                                        name={poster.data.name}
                                         />   
                    })
                }

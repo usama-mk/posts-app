@@ -90,7 +90,8 @@ export default function CreatePost(props) {
                      imageUrl: URL,
                      timeStamp: firebase.firestore.FieldValue.serverTimestamp()  ,         
                      description: description,
-                     uid: user.uid
+                     uid: user.uid,
+                     name: additionalData.name
                      
                  })
              }).then(()=>{

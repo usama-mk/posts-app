@@ -9,12 +9,14 @@ import Login from './Pages/Login/Login';
 import ReportImage from './Pages/ReportImage/ReportImage';
 import ViewImage from './Pages/ViewImage/ViewImage';
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "./actions";
+import { setAdditionalData, setUser } from "./actions";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 
 function App() {
   // const [user, setUser] = useState("");
   const user= useSelector(state=> state.user.user)
+  const additionalData= useSelector(state=> state.user.additionalData)
+
   const dispatch= useDispatch()
   const [isAdmin, setIsAdmin]=useState("")
 
@@ -35,6 +37,7 @@ useEffect(()=>{
   authListener();
   console.log("admin sec")
   var docRef = db.collection("Admins").doc("cKbxaFUTg1KcAkgCXExa");
+
   docRef.get().then(function(doc) {
       if (doc.exists) {
           console.log("Admins' Document data:", doc.data());
@@ -51,6 +54,12 @@ useEffect(()=>{
   }).catch(function(error) {
       console.log("Error getting document:", error);
   });
+   db.collection("users").doc(`${user.uid}`)
+        .onSnapshot((doc) => {
+        // console.log("Current data: ", doc.data());
+        dispatch(setAdditionalData(doc.data()))
+        console.log(additionalData)
+             });
 },[isAdmin, user])
   return (
     <div className="App">
@@ -62,7 +71,7 @@ useEffect(()=>{
        {user ? <Route exact path={`/createpost`} render={()=>(<CreatePost user={user} isAdmin={isAdmin} />)} />: <div></div> }
        {<Route exact path="/viewimage" render={()=>(<ViewImage user={user}  />)} /> }
        {<Route exact path="/reportimage" render={()=>(<ReportImage user={user}  />)} /> }
-       {<Route exact path="/userprofile" render={()=>(<UserProfile user={user}  />)} /> }
+       {<Route exact path="/userprofile" render={()=>(<UserProfile user={user} additionalData={additionalData} />)} /> }
       
       </BrowserRouter>
     </div>

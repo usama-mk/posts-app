@@ -2,6 +2,7 @@ import { TextField } from '@material-ui/core'
 import { CheckBoxOutlineBlank, Edit, HomeOutlined, SettingsPhoneTwoTone, ThumbUpRounded } from '@material-ui/icons'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import React from 'react'
+import { useEffect } from 'react';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -9,8 +10,8 @@ import { setAdditionalData } from '../../actions';
 import { db } from '../../firebase';
 import './UserProfile.scss'
 
-function UserProfile({user}) {
-    const additionalData= useSelector(state=> state.user.additionalData)
+function UserProfile({user, additionalData}) {
+    // const additionalData= useSelector(state => state.user.additionalData)
     const [newEmail, setNewEmail]= useState(additionalData.email)
     const [newBirthday, setNewBirthday]= useState(additionalData.birthday)
     const [newGender, setNewGender]= useState(additionalData.gender)
@@ -64,6 +65,17 @@ function UserProfile({user}) {
           }
         
     }
+
+
+    useEffect(()=>{
+        // db.collection("users").doc(`${user.uid}`)
+        // .onSnapshot((doc) => {
+        // // console.log("Current data: ", doc.data());
+        // dispatch(setAdditionalData(doc.data()))
+        // console.log(additionalData)
+        //      });
+    },[])
+
     return (
         <div className="userProfile">
             <HomeOutlined fontSize='large' onClick={handleHomeRoute} />

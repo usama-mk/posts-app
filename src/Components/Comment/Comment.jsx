@@ -11,7 +11,7 @@ export default function Comment(props) {
     return (
         <div className="comment">
              
-    <span style={{color:"white", fontSize:"bolder", backgroundColor:"grey"}} className="commentEmail">{comment.uid}</span>
+    <span style={{color:"white", fontSize:"bolder", backgroundColor:"grey"}} className="commentEmail">{comment.name}</span>
     <h3 style={{color:"black", fontSize:"bolder", backgroundColor:"grey" }}className="commentMessage">{comment.commentMessage}</h3>
      
              

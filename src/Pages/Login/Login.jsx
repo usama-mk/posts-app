@@ -71,8 +71,10 @@ function Login(props) {
     firebaseApp
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        // window.location.replace("/")
+      .then(async (user) => {
+        console.log(user);
+        // await getUserDocument(user.uid);
+
         history.push("/");
       })
       .catch((error) => {
@@ -95,6 +97,37 @@ function Login(props) {
   const handleLogout = () => {
     firebaseApp.auth().signOut();
   };
+
+  const getUserDocument= async (uid)=>{
+      
+    const userRef = db.doc(`users/${uid}`);
+    const snapshot = await userRef.get();
+
+    if (!snapshot.exists) {
+      console.log(`creating doc`);
+      const { email } = user;
+
+      try {
+        userRef
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+                console.log("user' Document data:", doc.data());
+               const additionalData= doc.data();
+              
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("Admins: No such document!");
+            }
+              dispatch(setAdditionalData(doc.data()))
+            handleHomeRoute();
+          });
+      } catch (error) {
+        console.log(`error is: ` + error);
+      }
+    }
+    
+  }
 
   const authListener = () => {
     firebaseApp.auth().onAuthStateChanged((user) => {
